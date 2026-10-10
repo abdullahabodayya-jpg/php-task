@@ -1,0 +1,61 @@
+form {
+  width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.inline {
+  display: inline-block;
+  width: auto;
+  margin: 8px 15px 5px 0;
+  font-weight: normal;
+}
+
+.inline input {
+  width: auto;
+  margin-right: 5px;
+}
+
+.terms {
+  display: block;
+  margin-top: 15px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #ff7900;
+  color: white;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #e66d00;
+}
