@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     if ($password === $confirmPassword) {
-        // Prepare and execute
+        
         $stmt = $conn->prepare("UPDATE userdata SET password = ? WHERE email = ?");
         $stmt->bind_param("ss", $hashedPassword, $email);
 
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="col mb-2 mt-4">
                 <p class="text-center" style="font-weight: 600;
-                color: navy;"><a href="./register.php"
+                color: navy;"><a href="./redister.php"
                         style="text-decoration: none;">
                   Create Account</a> OR <a href="./login.php"
                         style="text-decoration: none;">Login</a></p>

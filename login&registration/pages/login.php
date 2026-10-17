@@ -1,44 +1,55 @@
-<?php 
+<?php
+session_start();
+
 require_once __DIR__ . "/../database/db_connect.php";
 
 $message = "";
-$toastClass ="";
+$toastClass = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    $stmt = $conn->prepare("SELECT password FROM userdata WHERE email = ?");
+    $stmt = $conn->prepare(
+        "SELECT id, password, role FROM userdata WHERE email = ?"
+    );
+
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
-    if ($stmt->num_rows() > 0) {
-        $stmt->bind_result($db_password);
+    if ($stmt->num_rows > 0) {
+        $user_id = 0;
+        $db_password = '';
+        $role = 'user';
+
+        $stmt->bind_result($user_id, $db_password, $role);
         $stmt->fetch();
 
         if (password_verify($password, $db_password)) {
-            $message = "Login successful";
-            $toastClass = "bg-success";
+            session_regenerate_id(true);
 
-            session_start();
+            $_SESSION['user_id'] = $user_id;
             $_SESSION['email'] = $email;
-            header("Location: dashboard.php");
+            $_SESSION['role'] = $role;
+
+            if ($role === 'admin') {
+                header("Location: dashboard.php");
+            } else {
+                header("Location: products.php");
+            }
+
             exit();
-        } else {
-            $message = "Incorrect Email or Password";
-            $toastClass = "bg-danger";
         }
-    }else {
-        $message = "Incorrect Email or Password";
-        $toastClass = "bg-danger";
     }
 
-    $stmt->close();
+    $message = "Incorrect Email or Password";
+    $toastClass = "bg-danger";
+
     $stmt->close();
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
